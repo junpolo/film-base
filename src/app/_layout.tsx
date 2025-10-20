@@ -1,27 +1,27 @@
-import "@/global.css";
-import { defaultConfig } from "@tamagui/config/v4";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { TamaguiProvider, createTamagui } from "tamagui";
+import { TamaguiProvider, Theme } from "tamagui";
 
-const config = createTamagui(defaultConfig);
-
-type Conf = typeof config;
-
-declare module "@tamagui/core" {
-  interface TamaguiCustomConfig extends Conf {}
-}
+import { config } from "@/tamagui.config";
+import { useInitFonts } from "@hooks";
 
 export default function RootLayout() {
+  const isFontsLoaded = useInitFonts();
+
+  if (!isFontsLoaded) return null;
+
   return (
     <SafeAreaProvider>
       <TamaguiProvider config={config}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        </Stack>
-        <StatusBar style="auto" />
+        <Theme name="dark">
+          <Stack>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="movie-details" />
+          </Stack>
+          <StatusBar style="auto" />
+        </Theme>
       </TamaguiProvider>
     </SafeAreaProvider>
   );
