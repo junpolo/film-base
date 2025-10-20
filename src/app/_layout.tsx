@@ -1,27 +1,28 @@
 import "@/global.css";
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
+import { defaultConfig } from "@tamagui/config/v4";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { TamaguiProvider, createTamagui } from "tamagui";
 
-import { useColorScheme } from "@/src/hooks/use-color-scheme";
+const config = createTamagui(defaultConfig);
+
+type Conf = typeof config;
+
+declare module "@tamagui/core" {
+  interface TamaguiCustomConfig extends Conf {}
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <SafeAreaProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      <TamaguiProvider config={config}>
         <Stack>
-          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
         <StatusBar style="auto" />
-      </ThemeProvider>
+      </TamaguiProvider>
     </SafeAreaProvider>
   );
 }
