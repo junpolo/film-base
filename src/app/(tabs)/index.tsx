@@ -76,7 +76,7 @@ export default function HomeScreen() {
             backgroundColor="$color1"
             placeholder="What's on your mind?"
           />
-          <Button icon={Filter} backgroundColor="$accent1" />
+          <Button icon={Filter} backgroundColor="$accent2" />
         </View>
 
         <FlashList
