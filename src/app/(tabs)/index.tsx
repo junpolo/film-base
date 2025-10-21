@@ -1,5 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
-import { Filter } from "@tamagui/lucide-icons";
+import { Sliders } from "@tamagui/lucide-icons";
 import { router } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -76,7 +76,7 @@ export default function HomeScreen() {
             backgroundColor="$color1"
             placeholder="What's on your mind?"
           />
-          <Button icon={Filter} backgroundColor="$accent2" />
+          <Button icon={Sliders} backgroundColor="$accent2" />
         </View>
 
         <FlashList

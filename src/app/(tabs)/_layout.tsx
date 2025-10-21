@@ -28,7 +28,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="favorites"
         options={{
-          headerShown: false,
+          headerTitle: "My Favorites",
+          headerTintColor: theme.color?.val,
+          headerStyle: { backgroundColor: theme.background?.val },
           tabBarLabel: "Favorites",
           tabBarIcon: ({ color }) => <Star color={color} />,
         }}
