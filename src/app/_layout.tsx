@@ -7,6 +7,9 @@ import { Button, TamaguiProvider, Theme } from "tamagui";
 import { config } from "@/tamagui.config";
 import { useInitFonts } from "@hooks";
 import { ArrowLeft } from "@tamagui/lucide-icons";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const isFontsLoaded = useInitFonts();
@@ -14,30 +17,40 @@ export default function RootLayout() {
   if (!isFontsLoaded) return null;
 
   return (
-    <SafeAreaProvider>
-      <TamaguiProvider config={config}>
-        <Theme name="dark">
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="movie-details"
-              options={{
-                headerTransparent: true,
-                headerTitle: "",
-                headerLeft: () => (
-                  <Button
-                    icon={ArrowLeft}
-                    size="$3"
-                    backgroundColor="$accent2"
-                    onPress={() => router.back()}
-                  />
-                ),
-              }}
-            />
-          </Stack>
-          <StatusBar style="auto" />
-        </Theme>
-      </TamaguiProvider>
-    </SafeAreaProvider>
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <TamaguiProvider config={config}>
+          <Theme name="dark">
+            <Stack>
+              <Stack.Screen
+                name="(tabs)"
+                options={{
+                  headerShown: false,
+                  contentStyle: {
+                    backgroundColor: "red",
+                  },
+                }}
+              />
+              <Stack.Screen
+                name="movie-details"
+                options={{
+                  headerTransparent: true,
+                  headerTitle: "",
+                  headerLeft: () => (
+                    <Button
+                      icon={ArrowLeft}
+                      size="$3"
+                      backgroundColor="$accent2"
+                      onPress={() => router.back()}
+                    />
+                  ),
+                }}
+              />
+            </Stack>
+            <StatusBar style="inverted" />
+          </Theme>
+        </TamaguiProvider>
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }

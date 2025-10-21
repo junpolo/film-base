@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-movie-app",
-    "slug": "react-native-movie-app",
+    "name": "FilmBase",
+    "slug": "film-base",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

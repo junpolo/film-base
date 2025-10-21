@@ -5,7 +5,11 @@
     "paths": {
       "@/*": ["./*"],
       "@hooks": ["./src/hooks"],
-      "@utils": ["./src/utils"]
+      "@utils": ["./src/utils"],
+      "@services": ["./src/services"],
+      "@screens/*": ["./src/screens/*"],
+      "@types": ["./src/types"],
+      "@components": ["./src/components"]
     }
   },
   "include": [

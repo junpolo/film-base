@@ -18,6 +18,8 @@
     "@shopify/flash-list": "^2.1.0",
     "@tamagui/config": "^1.135.3",
     "@tamagui/lucide-icons": "^1.135.3",
+    "@tanstack/react-query": "^5.90.5",
+    "axios": "^1.12.2",
     "expo": "~54.0.13",
     "expo-blur": "^15.0.7",
     "expo-constants": "~18.0.9",
