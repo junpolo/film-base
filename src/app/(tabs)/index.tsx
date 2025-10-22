@@ -10,6 +10,7 @@ import {
   useHome,
   Placeholder,
 } from "@screens/Home";
+import { Keyboard } from "react-native";
 
 export default function HomeScreen() {
   const theme = useTheme();
@@ -28,6 +29,11 @@ export default function HomeScreen() {
   } = useHome();
 
   const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    Keyboard.dismiss();
+    setOpenModal(true);
+  };
 
   const showSearchResultText = searchValue && !isLoading && !isUnableToFetch;
 
@@ -50,7 +56,7 @@ export default function HomeScreen() {
             <Button
               icon={Sliders}
               backgroundColor="$accent2"
-              onPress={() => setOpenModal(true)}
+              onPress={handleOpenModal}
             />
           </View>
 

@@ -12,6 +12,7 @@ import {
   useTheme,
 } from "tamagui";
 import { MovieFilters, MovieTypes } from "../types";
+import { Keyboard } from "react-native";
 
 type FilterProps = {
   open: boolean;
@@ -48,12 +49,14 @@ export const FilterBottomSheet = ({
   const handleTextChange = (value: string) => setYear(value);
 
   const handleApplyFilter = () => {
+    Keyboard.dismiss();
     onApplyFilter && onApplyFilter({ movieType: type, year });
   };
 
   const showResetButton = yearReleased !== "" || selectedType !== undefined;
 
   const handleResetFilters = () => {
+    Keyboard.dismiss();
     setYear("");
     setType(undefined);
     onApplyFilter && onApplyFilter({ movieType: undefined, year: "" });
