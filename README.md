@@ -1,50 +1,51 @@
-# Welcome to your Expo app 👋
+<h1 align="center" id="title">Film Base</h1>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p id="description">A React Native app showcasing movie metadata ratings and cast information using OMDB API modern UI and clean design principles.</p>
 
-## Get started
+## 🧐 Features
 
-1. Install dependencies
+- Simple movie fetch API using OMDb
+- Search for your favorite movies and their details
+- Add movies to your favorites
+- Only available for android (for now)
 
-   ```bash
-   npm install
-   ```
+## ⚙️ Environment Variables
 
-2. Start the app
+To run this project, you must create an `.env` file and add this environment variable to your `.env` file to connect with the OMDB API.
 
-   ```bash
-   npx expo start
-   ```
+`EXPO_PUBLIC_API_KEY`
 
-In the output, you'll find options to open the app in a
+## 🛠️ Installation Steps:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. Clone the repository
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+ git clone https://github.com/junpolo/film-base.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Install packages
 
-## Learn more
+```
+ pnpm install
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+3. Start the project using expo go
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```
+ pnpm start
+```
 
-## Join the community
+## 💻 Built With
 
-Join our community of developers creating universal apps.
+- [Expo](https://docs.expo.dev/)
+- [Tamagui](https://tamagui.dev/)
+- [FlashList](https://shopify.github.io/flash-list/) - for optimized lists
+- [Tanstack Query](https://tanstack.com/query/v5/docs/framework/react/installation) - for data fetching and server state management
+- [Zustand](https://zustand-demo.pmnd.rs/) - global state management
+- [AsyncStorage](https://www.npmjs.com/package/@react-native-async-storage/async-storage) - data persistence
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📜 License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+This project is freely available for use under the MIT License. Please ensure proper attribution is maintained by including my original credentials and a link to this [repo](https://github.com/junpolo/film-base).
