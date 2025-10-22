@@ -4,11 +4,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { MovieDetailsReponse, MovieItem } from "../types";
 
-interface FavoritesStoreActions {
-  updateFavorites: (movie: MovieDetailsReponse | MovieItem) => void;
-  isFavorite: (movieId: MovieDetailsReponse["imdbID"]) => boolean;
-}
-
 interface FavoritesStoreState {
   favorites: MovieDetailsReponse[] | MovieItem[];
   updateFavorites: (movie: MovieDetailsReponse | MovieItem) => void;

@@ -2,8 +2,13 @@ import { Sliders } from "@tamagui/lucide-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, Input, Spinner, View, useTheme } from "tamagui";
 
-import { MovieList } from "@components";
-import { EmptySearch, SearchResultText, useHome } from "@screens/Home";
+import { Loader, MovieList } from "@components";
+import {
+  EmptySearch,
+  SearchResultText,
+  useHome,
+  Placeholder,
+} from "@screens/Home";
 
 export default function HomeScreen() {
   const theme = useTheme();
@@ -16,6 +21,7 @@ export default function HomeScreen() {
     isLoading,
     debouncedSearch,
     isUnableToFetch,
+    isEmptyState,
   } = useHome();
 
   const showSearchResultText =
@@ -40,11 +46,11 @@ export default function HomeScreen() {
         </View>
 
         {showSearchResultText && <SearchResultText value={debouncedSearch} />}
-
         {isUnableToFetch && <EmptySearch value={debouncedSearch} />}
+        {isEmptyState && <Placeholder />}
 
         {isLoading ? (
-          <Spinner size="large" color="$accent2" alignSelf="center" />
+          <Loader />
         ) : (
           <MovieList
             data={movies}

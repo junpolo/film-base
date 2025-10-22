@@ -13,8 +13,15 @@ export const useHome = () => {
     useGetMovies(debouncedSearch);
 
   const isUnableToFetch = useMemo(
-    () => data?.pages.some((page) => page.Response === "False"),
-    [data]
+    () =>
+      debouncedSearch !== "" &&
+      data?.pages.some((page) => page.Response === "False"),
+    [data, debouncedSearch]
+  );
+
+  const isEmptyState = useMemo(
+    () => debouncedSearch === "" && !isUnableToFetch,
+    [isUnableToFetch, debouncedSearch]
   );
 
   const movies = data?.pages.flatMap((page) => page.Search) ?? [];
@@ -36,5 +43,6 @@ export const useHome = () => {
     handleRefresh,
     debouncedSearch,
     isUnableToFetch,
+    isEmptyState,
   };
 };

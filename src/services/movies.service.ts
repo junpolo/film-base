@@ -7,7 +7,6 @@ import axios from "axios";
 import { MovieDetailsReponse, MovieResponse } from "../types";
 
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
-const DEFAULT_SEARCH_STRING = "avengers";
 const MOVIES_PER_PAGE = 10;
 
 type FetchMoviesProps = {
@@ -17,7 +16,7 @@ type FetchMoviesProps = {
 
 const fetchMovies = async ({ pageParam = 1, queryKey }: FetchMoviesProps) => {
   const [_, search] = queryKey;
-  const searchParam = encodeURIComponent(search || DEFAULT_SEARCH_STRING);
+  const searchParam = encodeURIComponent(search);
 
   const res = await axios.get<MovieResponse>(
     `https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchParam}&type=movie&page=${pageParam}`
@@ -39,11 +38,10 @@ export const useGetMovies = (search: string) => {
     initialPageParam: 1,
     queryFn: fetchMovies,
     getNextPageParam: (lastPage, allPages) => {
-      // 🧩 Guard: If the API response is invalid, stop pagination
       if (!lastPage || lastPage.Response === "False") return undefined;
 
       const totalResults = Number(lastPage.totalResults || 0);
-      const loadedResults = (allPages?.length ?? 0) * MOVIES_PER_PAGE; // OMDb returns 10 items per page
+      const loadedResults = (allPages?.length ?? 0) * MOVIES_PER_PAGE;
 
       return loadedResults < totalResults ? allPages.length + 1 : undefined;
     },

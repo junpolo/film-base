@@ -1,5 +1,7 @@
 import { Suspense } from "react";
-import { MovieDetails, Loader } from "@screens/Movies";
+
+import { Loader } from "@components";
+import { MovieDetails } from "@screens/Movies";
 
 export default function MovieDetailsScreen() {
   return (
