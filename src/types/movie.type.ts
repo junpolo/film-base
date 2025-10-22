@@ -41,3 +41,10 @@ export type MovieDetailsReponse = MovieItem & {
   Website: string;
   Response: string;
 };
+
+export type MovieTypes = "movie" | "series" | "episode" | undefined;
+
+export type MovieFilters = {
+  year: string;
+  movieType: MovieTypes;
+};

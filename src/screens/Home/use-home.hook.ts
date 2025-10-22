@@ -1,15 +1,21 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 
-import { useDebounce } from "@hooks";
 import { useGetMovies } from "@services";
+import { MovieFilters } from "@types";
 
 export const useHome = () => {
   const queryClient = useQueryClient();
   const [searchValue, setSearchValue] = useState("");
+  const [filters, setFilters] = useState<MovieFilters>({
+    year: "",
+    movieType: undefined,
+  });
 
-  const { data, fetchNextPage, isFetchingNextPage, isLoading } =
-    useGetMovies(searchValue);
+  const { data, fetchNextPage, isFetchingNextPage, isLoading } = useGetMovies({
+    search: searchValue,
+    filters,
+  });
 
   const isUnableToFetch = useMemo(
     () =>
@@ -33,6 +39,10 @@ export const useHome = () => {
     queryClient.resetQueries({ queryKey: ["movies"] });
   };
 
+  const handleApplyFilters = ({ movieType, year }: MovieFilters) => {
+    setFilters({ movieType, year });
+  };
+
   return {
     movies,
     fetchNextPage,
@@ -43,5 +53,7 @@ export const useHome = () => {
     searchValue,
     isUnableToFetch,
     isEmptyState,
+    handleApplyFilters,
+    filters,
   };
 };

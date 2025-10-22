@@ -4,7 +4,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import axios from "axios";
-import { MovieDetailsReponse, MovieResponse } from "../types";
+import { MovieDetailsReponse, MovieFilters, MovieResponse } from "../types";
 
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 const MOVIES_PER_PAGE = 10;
@@ -14,29 +14,32 @@ type FetchMoviesProps = {
   queryKey: string[];
 };
 
-const fetchMovies = async ({ pageParam = 1, queryKey }: FetchMoviesProps) => {
-  const [_, search] = queryKey;
-  const searchParam = encodeURIComponent(search);
+interface GetMovieProps {
+  search: string;
+  filters: MovieFilters;
+}
 
-  const res = await axios.get<MovieResponse>(
-    `https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchParam}&type=movie&page=${pageParam}`
-  );
-
-  const data = res.data;
-
-  if (data.Response === "False") {
-    return { Search: [], totalResults: "0", Response: "False" };
-  }
-
-  return data;
-};
-
-// TODO: implement filters
-export const useGetMovies = (search: string) => {
+export const useGetMovies = ({ search, filters }: GetMovieProps) => {
   return useInfiniteQuery({
-    queryKey: ["movies", search],
+    queryKey: ["movies", search, filters],
     initialPageParam: 1,
-    queryFn: fetchMovies,
+    queryFn: async ({ pageParam = 1 }) => {
+      const searchParam = encodeURIComponent(search);
+      const yearParam = filters?.year || "";
+      const typeParam = filters?.movieType || "";
+
+      const res = await axios.get<MovieResponse>(
+        `https://www.omdbapi.com/?apikey=${API_KEY}&s=${searchParam}&type=${typeParam}&y=${yearParam}&page=${pageParam}`
+      );
+
+      const data = res.data;
+
+      if (data.Response === "False") {
+        return { Search: [], totalResults: "0", Response: "False" };
+      }
+
+      return data;
+    },
     getNextPageParam: (lastPage, allPages) => {
       if (!lastPage || lastPage.Response === "False") return undefined;
 
