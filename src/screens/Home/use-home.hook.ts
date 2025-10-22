@@ -6,28 +6,27 @@ import { useGetMovies } from "@services";
 
 export const useHome = () => {
   const queryClient = useQueryClient();
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 1000);
+  const [searchValue, setSearchValue] = useState("");
 
-  const { data, fetchNextPage, isFetchingNextPage, isLoading, error } =
-    useGetMovies(debouncedSearch);
+  const { data, fetchNextPage, isFetchingNextPage, isLoading } =
+    useGetMovies(searchValue);
 
   const isUnableToFetch = useMemo(
     () =>
-      debouncedSearch !== "" &&
+      searchValue !== "" &&
       data?.pages.some((page) => page.Response === "False"),
-    [data, debouncedSearch]
+    [data, searchValue]
   );
 
   const isEmptyState = useMemo(
-    () => debouncedSearch === "" && !isUnableToFetch,
-    [isUnableToFetch, debouncedSearch]
+    () => searchValue === "" && !isUnableToFetch && !isLoading,
+    [isUnableToFetch, searchValue, isLoading]
   );
 
   const movies = data?.pages.flatMap((page) => page.Search) ?? [];
 
   const handleSearch = (value: string) => {
-    setSearch(value);
+    setSearchValue(value);
   };
 
   const handleRefresh = () => {
@@ -41,7 +40,7 @@ export const useHome = () => {
     isLoading,
     handleSearch,
     handleRefresh,
-    debouncedSearch,
+    searchValue,
     isUnableToFetch,
     isEmptyState,
   };

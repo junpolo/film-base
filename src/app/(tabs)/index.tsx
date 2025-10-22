@@ -1,8 +1,8 @@
 import { Sliders } from "@tamagui/lucide-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Button, Input, Spinner, View, useTheme } from "tamagui";
+import { Button, View, useTheme } from "tamagui";
 
-import { Loader, MovieList } from "@components";
+import { Loader, MovieList, SearchInput } from "@components";
 import {
   EmptySearch,
   SearchResultText,
@@ -17,15 +17,14 @@ export default function HomeScreen() {
     fetchNextPage,
     isFetchingNextPage,
     handleSearch,
+    searchValue,
     handleRefresh,
     isLoading,
-    debouncedSearch,
     isUnableToFetch,
     isEmptyState,
   } = useHome();
 
-  const showSearchResultText =
-    debouncedSearch && !isLoading && !isUnableToFetch;
+  const showSearchResultText = searchValue && !isLoading && !isUnableToFetch;
 
   return (
     <SafeAreaView
@@ -36,17 +35,12 @@ export default function HomeScreen() {
     >
       <View flex={1}>
         <View paddingInline={18} marginBottom={24} flexDirection="row" gap={18}>
-          <Input
-            flex={1}
-            backgroundColor="$color1"
-            placeholder="What's on your mind?"
-            onChangeText={handleSearch}
-          />
+          <SearchInput onSearch={handleSearch} />
           <Button icon={Sliders} backgroundColor="$accent2" />
         </View>
 
-        {showSearchResultText && <SearchResultText value={debouncedSearch} />}
-        {isUnableToFetch && <EmptySearch value={debouncedSearch} />}
+        {showSearchResultText && <SearchResultText value={searchValue} />}
+        {isUnableToFetch && <EmptySearch value={searchValue} />}
         {isEmptyState && <Placeholder />}
 
         {isLoading ? (

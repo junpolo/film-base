@@ -11,7 +11,7 @@ export const EmptySearch = ({ value }: { value: string }) => {
       marginBottom={70}
       gap={14}
     >
-      <MessageSquareWarning size={120} />
+      <MessageSquareWarning size={120} color="$accent2" />
       <View alignItems="center" gap={7}>
         <H6>Oops!</H6>
         <Text fontSize="$2" textAlign="center" color="gray" lineHeight="$2">
