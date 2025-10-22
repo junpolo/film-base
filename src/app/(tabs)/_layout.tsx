@@ -1,4 +1,4 @@
-import { Home, Star } from "@tamagui/lucide-icons";
+import { Heart, Home, Star } from "@tamagui/lucide-icons";
 import { Tabs } from "expo-router";
 import { useTheme } from "tamagui";
 
@@ -32,7 +32,7 @@ export default function TabLayout() {
           headerTintColor: theme.color?.val,
           headerStyle: { backgroundColor: theme.background?.val },
           tabBarLabel: "Favorites",
-          tabBarIcon: ({ color }) => <Star color={color} />,
+          tabBarIcon: ({ color }) => <Heart color={color} />,
         }}
       />
     </Tabs>

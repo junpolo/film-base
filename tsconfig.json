@@ -9,7 +9,8 @@
       "@services": ["./src/services"],
       "@screens/*": ["./src/screens/*"],
       "@types": ["./src/types"],
-      "@components": ["./src/components"]
+      "@components": ["./src/components"],
+      "@stores/*": ["./src/stores/*"]
     }
   },
   "include": [

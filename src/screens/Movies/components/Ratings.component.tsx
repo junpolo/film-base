@@ -27,7 +27,6 @@ export const Ratings = ({ ratings }: RatingsProps) => {
       flexDirection="row"
       justifyContent="space-evenly"
       flexWrap="wrap"
-      marginTop={16}
       gap={GAP}
     >
       {ratings.map((item, idx) => (

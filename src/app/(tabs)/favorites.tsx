@@ -1,64 +1,36 @@
-import { Sliders } from "@tamagui/lucide-icons";
-import React from "react";
-import { Button, Input, View } from "tamagui";
+import { View, Text } from "tamagui";
 
-const TEST_IMAGE =
-  "https://m.media-amazon.com/images/M/MV5BZDI1NGU2ODAtNzBiNy00MWY5LWIyMGEtZjUxZjUwZmZiNjBlXkEyXkFqcGc@._V1_SX300.jpg";
-
-const DATA = [
-  {
-    key: 1,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 2,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 3,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 4,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 5,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 6,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 7,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 8,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 9,
-    image: TEST_IMAGE,
-  },
-  {
-    key: 10,
-    image: TEST_IMAGE,
-  },
-];
+import { MovieList } from "@components";
+import { useFavorites } from "@stores/favorites.store";
+import { HeartCrack } from "@tamagui/lucide-icons";
 
 export default function FavoritesScreen() {
+  const favorites = useFavorites();
+
+  const hasFavorites = favorites.length > 0;
+
   return (
-    <View flex={1} backgroundColor="$background" paddingBlock={24}>
-      <View paddingInline={18} marginBottom={24} flexDirection="row" gap={18}>
-        <Input
+    <View flex={1} backgroundColor="$background" justifyContent="center">
+      {hasFavorites && <MovieList data={favorites} disableRefresh />}
+
+      {!hasFavorites && (
+        <View
           flex={1}
-          backgroundColor="$color1"
-          placeholder="Find the things you liked"
-        />
-        <Button icon={Sliders} backgroundColor="$accent2" />
-      </View>
+          justifyContent="center"
+          alignItems="center"
+          alignContent="center"
+          backgroundColor="$background"
+          flexWrap="wrap"
+          paddingInline={18}
+          marginBottom={70}
+        >
+          <HeartCrack size={120} color="$accent2" marginBottom={24} />
+          <Text fontSize="$5">Time to Build Your Collection</Text>
+          <Text color="gray" lineHeight="$2" textAlign="center">
+            Start exploring and tap the heart icon on any movie to save it here.
+          </Text>
+        </View>
+      )}
     </View>
   );
 }

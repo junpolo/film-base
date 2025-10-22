@@ -15,6 +15,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useDimensions } from "@hooks";
 import { withOpacity } from "@utils";
 import { FavoriteButton } from "@components";
+import { useUpdateFavorites, useIsFavorite } from "@stores/favorites.store";
 import { Genre } from "./Genre.component";
 import { Ratings } from "./Ratings.component";
 import { Runtime } from "./Runtime.component";
@@ -24,6 +25,8 @@ export const MovieDetails = () => {
   const { data } = useMovieDetails();
   const theme = useTheme();
   const { width, height } = useDimensions();
+  const updateFavorites = useUpdateFavorites();
+  const isFavorite = useIsFavorite(data.imdbID);
 
   return (
     <ScrollView backgroundColor="$background">
@@ -56,24 +59,30 @@ export const MovieDetails = () => {
       </View>
       <SafeAreaView>
         <View marginTop={-height * 0.12} paddingInline={18} gap={36}>
-          <View gap={10}>
-            <View>
-              {data.imdbRating !== "N/A" && (
-                <XGroup gap={5}>
-                  <StarFull color="#f5c518" size="$1" />
-                  <Text fontWeight={600}>{data.imdbRating}</Text>
-                </XGroup>
-              )}
+          <View gap={20}>
+            <View gap={10}>
+              <View>
+                {data.imdbRating !== "N/A" && (
+                  <XGroup gap={5}>
+                    <StarFull color="#f5c518" size="$1" />
+                    <Text fontWeight={600}>{data.imdbRating}</Text>
+                  </XGroup>
+                )}
 
-              <Text fontWeight={900} fontSize="$8">
-                {data.Title}
-              </Text>
+                <Text fontWeight={900} fontSize="$8">
+                  {data.Title}
+                </Text>
+              </View>
+              <Runtime data={[data.Year, data.Runtime, data.Rated]} />
+              <Genre genre={data.Genre} />
             </View>
-            <Runtime data={[data.Year, data.Runtime, data.Rated]} />
-            <Genre genre={data.Genre} />
 
             <Ratings ratings={data.Ratings} />
-            <FavoriteButton />
+
+            <FavoriteButton
+              isActive={isFavorite}
+              onPress={() => updateFavorites(data)}
+            />
           </View>
 
           <View gap={6}>

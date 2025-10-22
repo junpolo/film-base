@@ -9,6 +9,7 @@ type MovieListProps = {
   onEndReached?: () => void;
   isFetchingNextPage?: boolean;
   onRefresh?: () => void;
+  disableRefresh?: boolean;
 };
 
 export const MovieList = ({
@@ -16,6 +17,7 @@ export const MovieList = ({
   onEndReached,
   isFetchingNextPage = false,
   onRefresh,
+  disableRefresh = false,
 }: MovieListProps) => {
   const handleEndReached = () => {
     onEndReached && onEndReached();
@@ -32,17 +34,20 @@ export const MovieList = ({
       data={data}
       keyExtractor={(item) => item.imdbID}
       numColumns={2}
-      contentContainerStyle={{ paddingInline: 18, paddingBottom: "25%" }}
-      ItemSeparatorComponent={() => <View height={14} />}
+      contentContainerStyle={{
+        paddingInline: 18,
+        paddingBottom: "25%",
+      }}
+      ItemSeparatorComponent={() => <View height={7} />}
       onEndReached={handleEndReached}
-      onRefresh={handleRefresh}
+      onRefresh={disableRefresh ? undefined : handleRefresh}
       onEndReachedThreshold={0.2}
       ListFooterComponent={() =>
         isFetchingNextPage && (
           <Spinner marginTop={48} size="large" color="$accent1" />
         )
       }
-      renderItem={({ item, index }) => <MovieCard item={item} index={index} />}
+      renderItem={({ item }) => <MovieCard item={item} />}
     />
   );
 };
