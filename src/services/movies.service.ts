@@ -1,16 +1,20 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import axios from "axios";
-import { MovieResponse } from "../types";
+import { MovieDetailsReponse, MovieResponse } from "../types";
 
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 const DEFAULT_SEARCH_STRING = "avengers";
+const MOVIES_PER_PAGE = 10;
 
 type FetchMoviesProps = {
   pageParam: number | undefined;
   queryKey: string[];
 };
 
-// TODO: get movies when parameters change
 const fetchMovies = async ({ pageParam = 1, queryKey }: FetchMoviesProps) => {
   const [_, search] = queryKey;
   const searchParam = encodeURIComponent(search || DEFAULT_SEARCH_STRING);
@@ -28,6 +32,7 @@ const fetchMovies = async ({ pageParam = 1, queryKey }: FetchMoviesProps) => {
   return data;
 };
 
+// TODO: implement filters
 export const useGetMovies = (search: string) => {
   return useInfiniteQuery({
     queryKey: ["movies", search],
@@ -38,9 +43,22 @@ export const useGetMovies = (search: string) => {
       if (!lastPage || lastPage.Response === "False") return undefined;
 
       const totalResults = Number(lastPage.totalResults || 0);
-      const loadedResults = (allPages?.length ?? 0) * 10; // OMDb returns 10 items per page
+      const loadedResults = (allPages?.length ?? 0) * MOVIES_PER_PAGE; // OMDb returns 10 items per page
 
       return loadedResults < totalResults ? allPages.length + 1 : undefined;
+    },
+  });
+};
+
+export const useGetMovieDetails = (id: string) => {
+  return useSuspenseQuery<MovieDetailsReponse>({
+    queryKey: ["movie-details", id],
+    queryFn: async () => {
+      const result = await axios.get(
+        `https://www.omdbapi.com/?apikey=${API_KEY}&i=${id}&plot=full`
+      );
+
+      return result.data;
     },
   });
 };

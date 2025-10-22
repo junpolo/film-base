@@ -19,8 +19,11 @@ export const MovieCard = ({ item, index }: MovieCardProps) => {
   const isLeft = index % 2 === 0;
   const isPosterAvailable = item.Poster && item.Poster !== "N/A";
 
-  const handleRedirect = () => {
-    router.push("/movie-details");
+  const handleRedirect = (movieId: string) => {
+    router.push({
+      pathname: "/movies/[movieId]",
+      params: { movieId },
+    });
   };
 
   return (
@@ -36,7 +39,7 @@ export const MovieCard = ({ item, index }: MovieCardProps) => {
       marginLeft={isLeft ? 0 : MARGIN}
       marginRight={isLeft ? MARGIN : 0}
       pressStyle={{ scale: 0.975 }}
-      onPress={handleRedirect}
+      onPress={() => handleRedirect(item.imdbID)}
     >
       <CardHeader padding={4}>
         <Button

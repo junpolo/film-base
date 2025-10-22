@@ -1,12 +1,11 @@
-import { Stack, router } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Button, TamaguiProvider, Theme } from "tamagui";
+import { TamaguiProvider, Theme } from "tamagui";
 
 import { config } from "@/tamagui.config";
 import { useInitFonts } from "@hooks";
-import { ArrowLeft } from "@tamagui/lucide-icons";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -27,23 +26,14 @@ export default function RootLayout() {
                 options={{
                   headerShown: false,
                   contentStyle: {
-                    backgroundColor: "red",
+                    backgroundColor: config.themes.dark.background.val,
                   },
                 }}
               />
               <Stack.Screen
-                name="movie-details"
+                name="movies"
                 options={{
-                  headerTransparent: true,
-                  headerTitle: "",
-                  headerLeft: () => (
-                    <Button
-                      icon={ArrowLeft}
-                      size="$3"
-                      backgroundColor="$accent2"
-                      onPress={() => router.back()}
-                    />
-                  ),
+                  headerShown: false,
                 }}
               />
             </Stack>
